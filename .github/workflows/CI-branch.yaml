@@ -1,0 +1,34 @@
+name: CI-branch-pr
+
+# this will disable concurrent builds per branch
+concurrency:
+  group: default  # only one branch built at-a-time
+  cancel-in-progress: false
+
+# build has to be on branch push so github.ref contains the branch name that can be passed to Spinnaker
+on:
+  pull_request:
+    branches:
+    - master
+
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        description: 
+        required: true
+    branches-ignore:
+      - master
+
+jobs:
+
+  build:
+    runs-on:
+      - ubuntu-22.04
+
+    env:
+      RELEASE_REGISTRY: kumo-docker-release-local.artylab.expedia.biz
+
+    steps:
+    - name: print branch name
+      run:  echo "branch name is ${{ github.ref }}"
