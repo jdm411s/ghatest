@@ -42,5 +42,5 @@ jobs:
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo '$STEPS_CONTEXT'
-    - name: print branch name
-      run:  echo "branch name is ${{ github.event.pull_request.head.ref }}"
+    # - name: print branch name
+    #   run:  echo "branch name is ${{ github.event.pull_request.head.ref }}"
