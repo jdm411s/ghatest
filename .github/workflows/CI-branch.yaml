@@ -9,7 +9,7 @@ concurrency:
 on:
   pull_request:
     branches:
-    - master
+    - main
 
   workflow_dispatch:
     inputs:
@@ -18,7 +18,7 @@ on:
         description: 
         required: true
     branches-ignore:
-      - master
+      - main
 
 jobs:
 
@@ -31,4 +31,4 @@ jobs:
 
     steps:
     - name: print branch name
-      run:  echo "branch name is ${{ github.ref }}"
+      run:  echo "branch name is ${{ github.event.pull_request.head.ref }}"
