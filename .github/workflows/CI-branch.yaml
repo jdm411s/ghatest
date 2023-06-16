@@ -34,13 +34,11 @@ jobs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo '$GITHUB_CONTEXT'
-    - name: Dump job context
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo '$JOB_CONTEXT'
-    - name: Dump steps context
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo '$STEPS_CONTEXT'
+    
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+
     - name: print branch name
-      run:  echo "branch name is ${{ github.event.pull_request.head.ref }}"
+      run:  echo "branch name is ${{ steps.extract_branch.outputs.branch }}"
